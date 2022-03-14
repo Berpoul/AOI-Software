@@ -1,0 +1,48 @@
+
+#Button activate by the user
+<form>
+    <button>Connect with BLE device</button> 
+  </form>
+  
+  <script>
+
+    var deviceName ="Olfactive Interface" //variable Name of the device to only connect to a specific device
+      //Type navigator.bluetooth on developper tools(console) to check if web browser is compatible
+    function isWebBLEAvailable() {
+      if (!navigator.bluetooth) {
+        console.log('Web Bluetooth is not available')
+        return false
+      }
+  
+      return true
+    }
+    
+    //Detect BLE device 
+    function getDeviceInfo() {
+      let options = {
+          filters:[
+             {name:deviceName}
+          ]
+          //acceptAllDevices: true // Option to accept all devices
+      }
+      
+      console.log('Requesting Bluetooth Device...')
+      navigator.bluetooth.requestDevice(options).then(device => {
+        console.log('> Name: ' + device.name) //Get all device and print name of the device
+      }).catch(error => {
+        console.log('Argh! ' + error)
+      })
+    }
+  
+    //Activate the 2 functions isWebBLEavailable and getDeviceInfo
+    //target the button
+    //submit=click the button
+    document.querySelector('form').addEventListener('submit', function(event) {
+      event.stopPropagation()
+      event.preventDefault()
+        //uses the 2 functions
+      if (isWebBLEAvailable()) {
+        getDeviceInfo()
+      }
+    })
+  </script>
