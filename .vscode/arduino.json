@@ -1,0 +1,6 @@
+{
+    "configuration": "softdevice=s132v6,debug=l0,debug_output=serial",
+    "board": "adafruit:nrf52:feather52832",
+    "sketch": "Web Bluetooth API/Adafruit/Adafruit.ino",
+    "port": "/dev/ttyUSB0"
+}

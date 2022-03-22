@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>OI Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <script src="scheduler.js"></script>
+  </head>
+  <body>
+    <div class="tabs" id='tabs'>
+      <!-- Tab 1 -->
+      <div class="tab" id="tab0">
+        <input type="radio" name="tabset" id="oi0" checked>
+        <label for="oi0">OI v0</label>
+        <section class="tabcontent">
+          <!--BEGIN: Main content-->
+          <div class="grid-parent"><!--BEGIN: Parent grid-->
+            <div class="grid-sidebar"><!--BEGIN: Sidebar grid-->
+              <div class="center"><!--Begin Connect / Disconnect section-->
+                <button class="button icon-disconnected" id="reconnect_btn0" visible autofocus onclick="reconnectDevice(ois[0])" type="button" title="Device is disconnected. Press to reconnect." ></button>
+                <button class="button icon-connected" id="disconnect_btn0" hidden onclick="disconnectDevice(ois[0])" type="button" title="Device is connected. Press to disconnect."></button>
+                <button class="button icon-loading" hidden id="loading_btn0" type="button" title="Waiting for connection..."></button>
+
+             
+  
+                    <button class="x0 button icon-inflate" onmousedown="ois[0].startInflation(getSelectedPorts(ois[0]))" onmouseup="ois[0].stopAction(getSelectedPorts(ois[0]))" type="button" disabled title="Inflate"></button>
+                    <button class="x0 button icon-vacuum" onmousedown="ois[0].startVacuum(getSelectedPorts(ois[0]))" onmouseup="ois[0].stopAction(getSelectedPorts(ois[0]))" type="button" disabled title="Vacuum"></button>
+                    <button class="x0 button icon-release" onmousedown="ois[0].startRelease(getSelectedPorts(ois[0]))" onmouseup="ois[0].stopAction(getSelectedPorts(ois[0]))" type="button" disabled title="Release"></button>
+                    <button class="x0 button icon-stop" onclick="ois[0].stopAllActions()" type="button" disabled title="Stop all actions"></button>
+                  </div><!--End Connect / Disconnect section-->
+                  <div class="checkboxes">
+                    <input class='x0' type="checkbox" id="port1_chk0" value="1" disabled>
+                    <input class='x0' type="checkbox" id="port2_chk0" value="2" disabled>
+                    <input class='x0' type="checkbox" id="port3_chk0" value="3" disabled>
+                    <input class='x0' type="checkbox" id="port4_chk0" value="4" disabled>
+                    <input class='x0' type="checkbox" id="port5_chk0" value="5" disabled>
+                  </div>
+              </div>
+              <div style="grid-area: config;" class="configuration"><!--Begin Configuration-->
+                <input disabled type="radio" class="x0" id="general0" name="config0" value="0" onclick="applySelectedConfiguration(ois[0])">
+                <label for="general0"  title="GENERAL"><img class="button icon-config-general marginbot"></img></label>
+                <input disabled type="radio" class="x0" id="inf_series0" name="config0" value="1" onclick="applySelectedConfiguration(ois[0])">
+                <label for="inf_series0" title="INFLATION_SERIES"><img class="button icon-config-inf_series"></img></label>
+                <input disabled type="radio" class="x0" id="inf_parallel0" name="config0" value="2" onclick="applySelectedConfiguration(ois[0])">
+                <label for="inf_parallel0" title="INFLATION_PARALLEL"><img class="button icon-config-inf_parallel"></img></label>
+                <input disabled type="radio" class="x0" id="vac_series0" name="config0" value="3" onclick="applySelectedConfiguration(ois[0])">
+                <label for="vac_series0" title="VACUUM_SERIES"><img class="button icon-config-vac_series"></img></label>
+                <input disabled type="radio" class="x0" id="vac_parallel0" name="config0" value="4" onclick="applySelectedConfiguration(ois[0])">
+                <label for="vac_parallel0" title="VACUUM_PARALLEL"><img class="button icon-config-vac_parallel"></img></label>
+                <!--We can also have a button for gettin the current configuration, but it isn't
+                necessary, <button id="read" onclick="getConfiguration()" type="button">Check Config</button>  -->
+              </div><!--End Configuration-->
+              <div style="grid-area: oi;" class="oigraphic" id="oigraphic0">
+                <!-- Insert the SVG graphic here -->
+              </div>
+              <div style="grid-area: ptable;"><!--Begin Pressures Table-->
+                <div align="center" style="width:100%; display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr;">
+                  <div>P(1)</div>
+                  <div>P(2)</div>
+                  <div>P(3)</div>
+                  <div>P(4)</div>
+                  <div>P(5)</div>
+                  <div id="port1val0">xx.xx</div>
+                  <div id="port2val0">xx.xx</div>
+                  <div id="port3val0">xx.xx</div>
+                  <div id="port4val0">xx.xx</div>
+                  <div id="port5val0">xx.xx</div>
+                </div>
+              </div><!--End Pressures Table-->
+            </div><!-- End Left grid-->
+            <hr>
+            <div class="grid-centerColumn"><!--Begin Center grid-->
+              <h3 style="grid-area: title;">Scheduler</h3>
+              <div style="grid-area: btns;">
+                <button class="x0 btn-scheduler" onclick="addRow(0)" type="button" disabled>+ Add Row</button>
+                <button class="x0 btn-scheduler" onclick="deleteRow(0)" type="button" disabled>Delete</button>
+                <input type="reset" class="x0 btn-scheduler" form="sheduleForm0" value="Reset" disabled/>
+              </div>
+              <form id="sheduleForm0" style="grid-area: tbl;" class="center">
+                <table id="schedule0">
+                  <tr>
+                    <th>t<sub>0</sub> (ms) </th>
+                    <th>Action</th>
+                    <th>PWM</th>
+                    <th>Ports </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input disabled class="x0 starttime" type="number" min="0" max="200000" value="2000" step="100">
+                    </td>
+                    <td>
+                      <select class="action" disabled>
+                          <option value="+">Inflate</option>
+                          <option value="-">Vacuum</option>
+                          <option value="^">Release</option>
+                          <option value="!" selected>Stop</option>
+                        </select>
+                    </td>
+                    <td>
+                      <input disabled class="pwm" type="number" min="100" max="255" value="255" step="5">
+                    </td>
+                    <td>
+                      <div>
+                        <input type="checkbox" class="port1" value="1" checked disabled>
+                        <input type="checkbox" class="port2" value="2" checked disabled>
+                        <input type="checkbox" class="port3" value="3" checked disabled>
+                        <input type="checkbox" class="port4" value="4" checked disabled>
+                        <input type="checkbox" class="port5" value="5" checked disabled>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <div style="grid-area: run; text-align: center;">
+                  <button class="x0 btn-run " onclick="executeSequence(ois[0])" disabled type="button" title="Run Sequence"> ► </button>
+                </div>
+              </form>
+            </div><!--End Center grid-->
+            <hr>
+            <div class="grid-rightColumn"><!--BEGIN: Right column grid-->
+              <h3>Log</h3>
+              <textarea readonly class="x0 log" id='log0'></textarea>
+              <div>
+                <button class="btn-log" onclick="clearLog(ois[0])" type="button">Clear Log</button>
+              </div>
+            </div><!--END: Right column grid-->
+          </div><!--END: Parent grid-->
+          <!--END: Main content-->
+        </section>
+      </div>
+      <!--End Tab1-->
+      
+  </body>
+  <script src="toBinaryString.js"></script>
+  <script src="main.js"></script> <!--this must be loaded first b/c it defines the listOfServices array.-->
+  <!--The other .js files can be loaded in any order-->
+  <script src="controlService.js"></script>
+  <script src="configService.js"></script>
+  <script src="indicatorService.js"></script>
+  <script src="deviceInfoService.js"></script>
+
+  <script src="svginjector.js"></script>
+  <script src="newTab.js"></script>
+  <script src="unsupportedAlert.js"></script>
+</html>

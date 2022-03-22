@@ -6,7 +6,7 @@ void setup() {
   Serial.println("Start!");
 
   Bluefruit.begin();
-  Bluefruit.setName("Olfactive Interface"); //Write device name detected by browser
+  Bluefruit.setName("OI"); //Write device name detected by browser
 
   startAdv(); //Start advertising : Is there any central device ? connect
 }
