@@ -11,7 +11,7 @@ const indicatorServiceUUID = '0b0b0b0b-0b0b-0b0b-0b0b-00000000aa02';
 const chrLedStatesUUID     = '0b0b0b0b-0b0b-0b0b-0b0b-c1000000aa02';
 const chrErrorUUID         = '0b0b0b0b-0b0b-0b0b-0b0b-c2000000aa02';
 
-listOfServices.push(indicatorServiceUUID); //appends this service to the array (defined in main.js).
+listOfServices.push(indicatorServiceUUID); //appends this service to the array (defined in conditions.js).
 
 //let indicatorService;
 //let chrLedStates;
@@ -20,29 +20,29 @@ listOfServices.push(indicatorServiceUUID); //appends this service to the array (
 //let stateRed = true;
 //let stateBlue = true;
 
-async function initIndicatorService(oi){
+async function initIndicatorService(flowio){
   try{
-    oi.indicatorService = await oi.bleServer.getPrimaryService(indicatorServiceUUID);
-    oi.indicatorService.chrLedStates = await oi.indicatorService.getCharacteristic(chrLedStatesUUID);
-    oi.indicatorService.chrError = await oi.indicatorService.getCharacteristic(chrErrorUUID);
+    flowio.indicatorService = await flowio.bleServer.getPrimaryService(indicatorServiceUUID);
+    flowio.indicatorService.chrLedStates = await flowio.indicatorService.getCharacteristic(chrLedStatesUUID);
+    flowio.indicatorService.chrError = await flowio.indicatorService.getCharacteristic(chrErrorUUID);
 
     //Subscribe to receive notifications from the chrError
-    await oi.indicatorService.chrError.startNotifications();
-    oi.indicatorService.chrError.addEventListener('characteristicvaluechanged', event => {
-      oi.log("FlowIO Error Code: " + event.target.value.getUint8(0));
+    await flowio.indicatorService.chrError.startNotifications();
+    flowio.indicatorService.chrError.addEventListener('characteristicvaluechanged', event => {
+      flowio.log("FlowIO Error Code: " + event.target.value.getUint8(0));
     });
 
     //Subscribe to receive notifications from chrLedStates.
-    await oi.indicatorService.chrLedStates.startNotifications(); //This causes red LED to turn off
+    await flowio.indicatorService.chrLedStates.startNotifications(); //This causes red LED to turn off
     //for unknown reasons having to do with the nrf52 bootloader or OS.
-    oi.indicatorService.chrLedStates.addEventListener('characteristicvaluechanged', event => {
-      oi.log("Notification: B=" + event.target.value.getUint8(1) + " R=" + event.target.value.getUint8(0));
+    flowio.indicatorService.chrLedStates.addEventListener('characteristicvaluechanged', event => {
+      flowio.log("Notification: B=" + event.target.value.getUint8(1) + " R=" + event.target.value.getUint8(0));
     });
-    oi.log("indicator Service Initialized");
+    flowio.log("indicator Service Initialized");
 
     //########################--- Define API Methods ---######################
-    oi.readError = async function(){
-      let errorNumberDataView = await oi.indicatorService.chrError.readValue(); //this will trigger our notification listener.
+    flowio.readError = async function(){
+      let errorNumberDataView = await flowio.indicatorService.chrError.readValue(); //this will trigger our notification listener.
       let errorNumber = errorNumberDataView.getUint8(0);
       if(errorNumber!=0){
         document.querySelector(`#ok_btn${this.instanceNumber}`).style.display = "none";
@@ -54,37 +54,37 @@ async function initIndicatorService(oi){
       }
       return errorNumber;
     }
-    oi.clearError = async function(){
+    flowio.clearError = async function(){
       let zeroArray = new Uint8Array([0]);
-      await oi.indicatorService.chrError.writeValue(zeroArray);
+      await flowio.indicatorService.chrError.writeValue(zeroArray);
     }
-    oi.getLedStates = async function(){
-      let valueDataView = await oi.indicatorService.chrLedStates.readValue(); //returns a DataView and triggers a notification.
+    flowio.getLedStates = async function(){
+      let valueDataView = await flowio.indicatorService.chrLedStates.readValue(); //returns a DataView and triggers a notification.
       //Set our LED state variables to match those in the characteristic:
       //We now convert the DataView to TypedArray so we can use array notation to access the data.
       //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView/buffer
       let ledStatesArray = new Uint8Array(valueDataView.buffer);
-      oi.ledBlue = ledStatesArray[1];
-      oi.ledRed = ledStatesArray[0];
+      flowio.ledBlue = ledStatesArray[1];
+      flowio.ledRed = ledStatesArray[0];
     }
-    oi.toggleRed = async function(){
-      oi.ledRed = !oi.ledRed;
-      let ledStatesArray = new Uint8Array([oi.ledRed,oi.ledBlue]);
-      await oi.indicatorService.chrLedStates.writeValue(ledStatesArray);
+    flowio.toggleRed = async function(){
+      flowio.ledRed = !flowio.ledRed;
+      let ledStatesArray = new Uint8Array([flowio.ledRed,flowio.ledBlue]);
+      await flowio.indicatorService.chrLedStates.writeValue(ledStatesArray);
     }
-    oi.toggleBlue = async function(){
-      oi.ledBlue = !oi.ledBlue;
-      let ledStatesArray = new Uint8Array([oi.ledRed,oi.ledBlue]);
-      await oi.indicatorService.chrLedStates.writeValue(ledStatesArray);
+    flowio.toggleBlue = async function(){
+      flowio.ledBlue = !flowio.ledBlue;
+      let ledStatesArray = new Uint8Array([flowio.ledRed,flowio.ledBlue]);
+      await flowio.indicatorService.chrLedStates.writeValue(ledStatesArray);
     }
     //########################################################################
 
     //Make read requests to trigger our notification funcion and to get initial values.
-    oi.getLedStates();
-    oi.readError();
+    flowio.getLedStates();
+    flowio.readError();
   }
   catch(error){
-    oi.log("Init Error: " + error);
+    flowio.log("Init Error: " + error);
     throw "ERROR: initIndicatorService() failed.";
   }
 }

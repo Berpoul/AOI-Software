@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <button id="reconnect_btn0" onclick="reconnectDevice(ois[0])" type="button" title="Device is disconnected. Press to reconnect." ></button>
+    <button id="reconnect_btn0"onclick="reconnectDevice(ois[0])" type="button" title="Device is disconnected. Press to reconnect." ></button>
 
 
 
@@ -15,7 +15,16 @@
 </body>
 
 
-<script src="main.js"></script> <!--this must be loaded first b/c it defines the listOfServices array.-->
+<div class="grid-rightColumn"><!--BEGIN: Right column grid-->
+    <h3>Log</h3>
+    <textarea readonly class="x0 log" id='log0'></textarea>
+    <div>
+      <button class="btn-log" onclick="clearLog(flowios[0])" type="button">Clear Log</button>
+    </div>
+  </div><!--END: Right column grid-->
+
+
+<script src="mymain.js"></script> <!--this must be loaded first b/c it defines the listOfServices array.-->
 
 
 

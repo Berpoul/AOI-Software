@@ -13,6 +13,12 @@ BLEService controlService;
 BLEService configService;
   BLECharacteristic chrConfig;
 
+BLEService indicatorService;
+  BLECharacteristic chrLedStates;
+  BLECharacteristic chrError;
+  uint8_t ledStates[2];
+
+  
 BLEDis deviceInfoService; //this creates both the service and characteristic(s) automatically.
 //##################################################################################
   
@@ -49,6 +55,7 @@ void startAdvertising(void) {
   Bluefruit.Advertising.addService(controlService); //advertise service uuid
   Bluefruit.Advertising.addService(configService); //advertise service uuid
   Bluefruit.Advertising.addService(deviceInfoService); //advertise service uuid
+  Bluefruit.Advertising.addService(indicatorService); //advertise service uuid
 
   Bluefruit.Advertising.setInterval(32, 244); // in unit of 0.625 ms
   Bluefruit.Advertising.setFastTimeout(30);   // number of seconds in fast mode
