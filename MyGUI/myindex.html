@@ -1,13 +1,21 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>OI Dashboard</title>
-    <meta charset="utf-8">
+  <title>OI Dashboard</title>
+  <meta charset="utf-8">
 
 </head>
 
 <body>
-    <button id="reconnect_btn0"onclick="reconnectDevice(ois[0])" type="button" title="Device is disconnected. Press to reconnect." ></button>
+
+
+  <script src="mymain.js"></script>
+  <!--this must be loaded first b/c it defines the listOfServices array.-->
+  <button id="reconnect_btn0" onclick="reconnectDevice(ois[0])" type="button"
+    title="Device is disconnected. Press to reconnect.">Connect OI</button>
+  <button id="reconnect_btn0" onclick="reconnectDevice(ois[0])" type="button"
+    title="Device is disconnected. Press to reconnect.">Connect OI</button>
 
 
 
@@ -15,16 +23,17 @@
 </body>
 
 
-<div class="grid-rightColumn"><!--BEGIN: Right column grid-->
-    <h3>Log</h3>
-    <textarea readonly class="x0 log" id='log0'></textarea>
-    <div>
-      <button class="btn-log" onclick="clearLog(flowios[0])" type="button">Clear Log</button>
-    </div>
-  </div><!--END: Right column grid-->
+<div class="grid-rightColumn">
+  <!--BEGIN: Right column grid-->
+  <h3>Log</h3>
+  <textarea readonly class="x0 log" id='log0'></textarea>
+  <div>
+    <button class="btn-log" onclick="clearLog(flowios[0])" type="button">Clear Log</button>
+  </div>
+</div>
+<!--END: Right column grid-->
 
 
-<script src="mymain.js"></script> <!--this must be loaded first b/c it defines the listOfServices array.-->
 
 
 

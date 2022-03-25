@@ -112,3 +112,141 @@ Artificiellemnet créer des sytemes de comparaisons.
 
 Interraciton utilisateurs points 
 - 
+
+
+
+
+Fun with Bluetooth 
+
+## Central and Peripheral
+
+Central device can connect to (multiple) peripheral.
+Peripheral can't connect to central device.
+
+## Generic attribute profile GATT
+Central= Client (Web)
+Peripheral = Server (NRF52)
+
+### Services 
+
+NRF52 multiple services :
+- device information
+- battery information
+- GPIO control 
+
+### Characteristic
+Inside a service : Multiple Characteristics 
+
+#### Device information
+Device information :
+- manufacturer
+- software number
+- model number 
+
+Each characteristic has value : 
+
+SERVER = Array of Objects
+SERVICE = Object
+CHARACERISTIC = Property
+VALUE = Value
+
+Services and characteristics are identified by UUID (16 or 128 bit)
+
+```c
+  chrBattPercentage = BLECharacteristic(0x2A19);
+  uint8_t configServiceUUID[16] = {0x03,0xaa,0x00,0x00,0x00,0x00,0x0b,0x0b,0x0b,0x0b,0x0b,0x0b,0x0b,0x0b,0x0b,0x0b}; //"0b0b0b0b-0b0b-0b0b-0b0b-00000000aa03"
+
+```
+
+BLE has low bandwidt : sending number is easier than sending strings. 
+
+## Do on characteristic :
+
+- Read
+- Write
+- Write without response
+- Notify
+
+Every value is an array of bytes. 
+
+### Web Bluetooth API : 
+
+
+### Connect to a device : 
+
+```c++
+navigator.bluetooth.requestDevice({
+    filters : [
+        { namePrefix: 'OI'}
+    ],
+})
+```
+
+For security, user has to click on the pair bouton.
+
+When user click : We get promise back. 
+
+We can : 
+
+
+```c++
+let device= await navigator.bluetooth.requestDevice({
+    filters : [
+        { namePrefix: 'OI'}
+    ],
+})
+
+
+let server = await device.gatt.connect(); //connect to the server
+let service = await server.getPrimaryService(0xff0f); //get the service 
+let characteristic = await service.getCharacteristic (0wfffc)); //get characteristic
+
+```
+
+### Write data
+
+Now we have the Characteristic so we can start to write value :
+
+```c++
+
+characteristic.writeValue(
+    new Uint8array([00x00,r,g,b]) //4 bytes for lightbulb 
+)
+```
+### Read data
+
+We can also read the data :
+
+```c++
+
+let value =await characteristic.readValue(
+    let r = value.getUint8(1);
+    )
+```
+
+### Get notified of changes 
+Event listener so that you can update on the screen when something changes. 
+
+```c++
+
+characteristic.addEventListener(
+    'characteristicvaluechanged',e => {
+        let r =e.target.value.getUint8(1);
+    }
+);
+
+characteristic.startNotifications(); //start listening
+
+promises = async await
+
+
+
+
+• Description:
+In this video I show you how to get started with WebSockets, one of the latest web technologies for exchanging data between web clients and web servers.
+We've seen how to use HTTP requests from a web browser to request data from a web server running on the ESP8266 (https://youtu.be/VNgFbQAVboA). A problem is that every time the client sends a request, the entire webpage needs to be reloaded. We saw how using XML HTTP requests and AJAX allowed for dynamically updating parts of the webpage (https://youtu.be/ZJoBy2c1dPk).
+With websockets the data exchange between a client and server is much easier, faster, and doesn't need a request to be made by the client. 
+In this tutorial, I build a webpage that:
+1. Allows me to display text data sent from the server using the Serial Monitor for text input.
+2. Allows me to send text data to the server using the Serial Monitor as a display output.
+3. Allows me to change the value of a slider to set the brightness value of an LED that's controlled by the web server running on the ESP8266.

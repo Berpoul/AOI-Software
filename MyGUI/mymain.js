@@ -32,7 +32,7 @@ function createNewInstance(){
 
 async function initializeAllServices(oi){
     try{
-      await initConfigService(oi); //defined in "configService.js"
+      //await initConfigService(oi); //defined in "configService.js"
       await initControlService(oi); //defined in "controlService.js"
       await initIndicatorService(oi); //defined in "indicatorService.js"
     }catch(error){
