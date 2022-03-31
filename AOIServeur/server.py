@@ -16,7 +16,7 @@ app = Flask(__name__)
 #web socket transports with eventlet
 sio = SocketIO(app,async_mode="eventlet")
 
-#sio = SocketIO(app)
+#sio = d(app)
 aois=[] #Liste des différentes AOI connecté (valeur = adresse ip) 
 
 #On recoit une requête HTTP get de AOI qui veut nous communiquer son adresse ip

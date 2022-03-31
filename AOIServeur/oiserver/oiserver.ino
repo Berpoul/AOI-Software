@@ -8,6 +8,11 @@
 const char* ssid = "Romain";
 const char* password = "chatoune";
 
+
+//char* ssid = "PoleDeVinci_DVIC";
+//char* password = "8PfURsp!dvic";
+
+
 WiFiClient client; // Creates a client that can connect to to a specified internet IP address and port
 
 //SERVER HOST AND PORT
@@ -74,7 +79,7 @@ void setup () {
     Serial.print(" and port ");
     Serial.print(port);
     Serial.println(" failed");    
-    delay(5000);
+    delay(3000);
     return;
   }
 
@@ -113,7 +118,7 @@ void setup () {
 
 
   server.begin(); //Tells the server to begin listening for incoming connections.
-  Serial.print("Server on");
+  Serial.print("Server is on and listening");
 
 }
 
@@ -125,16 +130,18 @@ void loop() {
     HTTPClient http;  //Declare an object of class HTTPClient
 
     //PAss the URL that we want to connect and make the GET request
-
-    //We send /register?ip=ip de aoi sur la réseau afin que le sever récupère ip
+  
+    //We send /register?ip=ip de aoi sur la réseau afin que le server récupère ip
     http.begin(client, "http://" + host + ":" + String(port) + "/register?ip=" + WiFi.localIP().toString()); //Specify request destination
     int httpCode = http.GET();  //Send the request 
-    //Thie methos will return the status of operation (good to store for error handling)
+    Serial.println("GET with local wifi ip sent");
+    //This methods will return the status of operation (good to store for error handling)
 
     if (httpCode > 0) { //Check the returning code : Greater then 0 means it is standar HTTP code (else erros)
 
       //get string methods on http object.
       String payload = http.getString();   //Get the request response payload
+      Serial.print("Code erreur reçu suite à la requête ip : ");
       Serial.println(payload);             //Print the response payload
 
     }
@@ -147,6 +154,5 @@ void loop() {
   //Communiquer au server l'addresse ip de esp8266 à travers une requets HTTP GET.
   //Rassurer le server chaque minute que l'AOI en questions est encore connectée.
   
-  //TO DO : Supprimer de la liste les AOI qui se sont deconnecte après 2 minutes
   Serial.println("test");
 }
