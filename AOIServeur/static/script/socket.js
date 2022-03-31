@@ -16,14 +16,33 @@ socket.on("update_list",data => {
     console.log(data)
 })
 
-//envoyer un évènement.
-socket.emit("test","coucou")
 
-
-//fonction
 
 function refresh_list(){
     socket.emit("refresh_list")
 }
 
 //Liste vide et si on appuie refresh : la liste déroulante se met à jour 
+
+//envoyer un évènement.
+socket.emit("test","coucou")
+
+function led_on(){
+    socket.emit("ledon")
+    //console.log(socket)
+}
+function led_off(){
+    socket.emit("ledoff")
+    //console.log(socket)
+}
+
+
+function power_on(){
+    socket.emit("poweron")
+    //console.log(socket)
+}
+function power_off(){
+    socket.emit("poweroff")
+    //console.log(socket)
+}
+
