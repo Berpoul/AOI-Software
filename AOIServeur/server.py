@@ -6,6 +6,8 @@ from flask import Flask,render_template,request
 from flask_socketio import SocketIO  
 import httpx
 import asyncio
+import random
+import time
 
 #SocketIO rajoute simplicité par rapport websocket (simplifie utilisation des websockets)
 
@@ -58,6 +60,9 @@ async def sendMessage():
 def sendlist():
     sio.emit("update_list",aois)
 
+######################### EVENT RECEPTION #########################
+
+######################### LED #########################
 
 @sio.on("ledon")
 def led_action():
@@ -69,6 +74,9 @@ def led_action():
     asyncio.run(led_off())
     #print("Instructiont to toggel led send from server")
 
+######################### Power circuit #########################
+
+
 @sio.on("poweron")
 def led_action():
     asyncio.run(power_on())
@@ -78,6 +86,65 @@ def led_action():
 def led_action():
     asyncio.run(power_off())
     #print("Instructiont to toggel led send from server")
+
+######################### Piezzo1 #########################
+
+
+@sio.on("piezzo1on")
+def led_action():
+    asyncio.run(piezzo1_on())
+    #print("Instructiont to toggel led send from server")
+
+@sio.on("piezzo1off")
+def led_action():
+    asyncio.run(piezzo1_off())
+    #print("Instructiont to toggel led send from server")
+
+
+######################### Piezzo2 #########################
+
+@sio.on("piezzo2on")
+def led_action():
+    asyncio.run(piezzo2_on())
+    #print("Instructiont to toggel led send from server")
+
+@sio.on("piezzo2off")
+def led_action():
+    asyncio.run(piezzo2_off())
+    #print("Instructiont to toggel led send from server")
+
+######################### Piezzo3 #########################
+@sio.on("piezzo3on")
+def led_action():
+    asyncio.run(piezzo3_on())
+    #print("Instructiont to toggel led send from server")
+
+@sio.on("piezzo3off")
+def led_action():
+    asyncio.run(piezzo3_off())
+    #print("Instructiont to toggel led send from server")
+
+######################### Piezzo4 #########################
+@sio.on("piezzo4on")
+def led_action():
+    asyncio.run(piezzo4_on())
+    #print("Instructiont to toggel led send from server")
+
+@sio.on("piezzo4off")
+def led_action():
+    asyncio.run(piezzo4_off())
+    #print("Instructiont to toggel led send from server")
+
+### find smell ####
+
+@sio.on("find")
+def led_action():
+    asyncio.run(find_smell())
+    #print("Instructiont to toggel led send from server")
+
+
+
+########### LED CONTROL ################
 
 
 
@@ -89,6 +156,12 @@ async def led_off():
     async with httpx.AsyncClient() as client: #
         response = await client.get("http://"+aois[0]+":5200/release?output=2&state=1")
 
+
+
+########### POWER CIRCUIT CONTROL ################
+
+
+
 async def power_on():
     async with httpx.AsyncClient() as client: #
         response = await client.get("http://"+aois[0]+":5200/release?output=15&state=0")
@@ -96,6 +169,74 @@ async def power_on():
 async def power_off():
     async with httpx.AsyncClient() as client: #
         response = await client.get("http://"+aois[0]+":5200/release?output=15&state=1")
+
+#######PIEZZO CONTROL ###########
+#Piezzo output are : 12,13,14,16
+
+#PIEZZO1
+async def piezzo1_on():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=16&state=0")
+
+async def piezzo1_off():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=16&state=1")
+
+#PIEZZO2
+
+async def piezzo2_on():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=14&state=0")
+
+async def piezzo2_off():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=14&state=1")
+
+#PIEZZO3
+
+async def piezzo3_on():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=13&state=0")
+
+async def piezzo3_off():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=13&state=1")
+
+#PIEZZO4
+
+async def piezzo4_on():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=2&state=0")
+
+async def piezzo4_off():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=2&state=1")
+
+
+
+##### FIND SMELL  ######
+
+#randompiezzo = [16, 14, 13, 12]
+randompiezzo = [12]
+
+async def find_smell():
+    async with httpx.AsyncClient() as client: #
+        response = await client.get("http://"+aois[0]+":5200/release?output=15&state=1") #turn power on
+        if(random.choice(randompiezzo)==16):
+                response = await client.get("http://"+aois[0]+":5200/release?output=16&state=1") #turn power on
+
+        elif (random.choice(randompiezzo)==14):
+                response = await client.get("http://"+aois[0]+":5200/release?output=14&state=1") #turn power on
+
+        elif (random.choice(randompiezzo)==13):
+                response = await client.get("http://"+aois[0]+":5200/release?output=13&state=1") #turn power on
+        elif (random.choice(randompiezzo)==12):
+                response = await client.get("http://"+aois[0]+":5200/release?output=2&state=1") #turn power on
+                time.sleep(5)
+                response = await client.get("http://"+aois[0]+":5200/release?output=2&state=0") #turn power on
+
+
+
 
 
 if __name__== "__main__":

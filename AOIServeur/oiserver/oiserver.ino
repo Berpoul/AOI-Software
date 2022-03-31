@@ -8,7 +8,7 @@
 const char* ssid = "Romain";
 const char* password = "chatoune";
 
-
+//
 //char* ssid = "PoleDeVinci_DVIC";
 //char* password = "8PfURsp!dvic";
 
@@ -16,7 +16,9 @@ const char* password = "chatoune";
 WiFiClient client; // Creates a client that can connect to to a specified internet IP address and port
 
 //SERVER HOST AND PORT
-String host = "172.20.10.2" ; 
+String host = "172.20.10.2" ; //iphone de romain
+//String host = "172.21.72.211" ; //wifi dvic
+
 const uint16_t port = 5000 ;
 
 
@@ -86,7 +88,7 @@ void setup () {
 
   
   
-
+  
   // Function to handle a GET request to <ESP_IP>/release?output=<inputMessage1>&state=<inputMessage2>
   //listen to an event called "/release"
   server.on("/release", HTTP_GET, [] (AsyncWebServerRequest * request) {

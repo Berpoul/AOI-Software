@@ -1,0 +1,49 @@
+body{
+    font-family: Roboto;
+  }
+  
+  .toggleWrapper{
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    border: 1px solid red;
+  }
+  
+  .toggleWrapper h3{
+    margin: 0px 20px;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  
+  .customToggle, .toggler{
+    transition: all 0.2s ease;
+  }
+  
+  .customToggle{
+    position: relative;
+    width: 50px;
+    height: 25px;
+    background: rgba(39, 46, 56, 1);
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .customToggle:hover{
+    background: rgba(39, 46, 56, .8);
+  }
+  
+  .toggler{
+    height: 19px;
+    width: 19px;
+    border-radius: 20px;
+    background: rgb(176, 179, 182);
+    margin-left: -50%;
+  }
+  
+  .customToggle.toggled .toggler{
+    margin-left: 50%;
+    background: rgb(68, 152, 255);
+  }
