@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.socket.io/4.1.0/socket.io.min.js"></script>
+
+    <title>ScentIO</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScentIO</title>
 
+  <script src="https://cdn.socket.io/4.1.0/socket.io.min.js"></script>
   <!-- <link rel="stylesheet" href="/static/style/style.css" /> -->
   <link rel="stylesheet" href="/static/style.css" />
 
@@ -14,75 +15,92 @@
 </head>
 <body>
 
-    <p>Display Connected AOI</p>  
-    <input type = "button" onclick = "refresh_list()" value = "Display">  
-     
+  <header>
+    <img id="logo" src="/static/Logo.png">
+    <h1>Olfactive Interface Software</h1>
+  </header>
 
-    <p>Toggle LED (DEBUG)</p>  
+  <hr>
 
-  <div class="toggleWrapper" data-switch="led">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Led</h3>
-  </div>
-
-    <p>Control Power Circuit</p>  
+  <main>
 
 
-  <div class="toggleWrapper" data-switch="power">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Circuit Power</h3>
-  </div>
 
-    <p>Scent 1 Control</p>  
+    <section id="controlSection">
+
+      <h2>Controls</h2>
 
 
-  <div class="toggleWrapper" data-switch="piezzo1">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Scent1</h3>
-  </div>
+      <button id="btnShowIP" onclick="refresh_list()">Show connected AOI</button>
+      <p id="displayIP">> ...</p>
 
 
-    <p>Scent 2 Control</p>  
+      <div style="margin: 40px 0px">
+        <div class="toggleWrapper" data-switch="led">
+          <div class="customToggle">
+            <span class="toggler"></span>
+          </div>
+          <h3>Led test</h3>
+        </div>
 
+        <div class="toggleWrapper" data-switch="power">
+          <div class="customToggle">
+            <span class="toggler"></span>
+          </div>
+          <h3>Circuit Power</h3>
+        </div>
+      </div>
 
-  <div class="toggleWrapper" data-switch="piezzo2">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Scent2</h3>
-  </div>
+      <button id="playGuessBtn">Play "guess the smell"</button>
+    </section>
 
+    <section id="scentSection">
+      <h2>Scents activation</h2>
+      <div id="scentRow">
 
-    <p>Scent 3 Control</p>  
+        <!-- SCENT 1 -->
+        <div class="scent" data-switch="piezzo1">
+          <img src="https://euimg.eworldtrade.com/uploads/user_products/3/2/333642-4987-20180706-o.jpg" alt="">
+          <span class="questionMark">?</span>
+          <div class="toggleWrapper" data-switch="piezzo1">
+            <div class="customToggle">
+              <span class="toggler"></span>
+            </div>
+            <h3>Cinnamon</h3>
+          </div>
+        </div>
 
-  <div class="toggleWrapper" data-switch="piezzo3">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Scent3</h3>
-  </div>
+        <!-- SCENT 2 -->
+        <div class="scent" data-switch="piezzo2">
+          <img
+            src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/how-to-grow-lavender-1622644170.jpg?crop=1.00xw:0.708xh;0,0.186xh&resize=1200:*"
+            alt="">
+          <span class="questionMark">?</span>
+          <div class="toggleWrapper" data-switch="piezzo2">
+            <div class="customToggle">
+              <span class="toggler"></span>
+            </div>
+            <h3>Lavender</h3>
+          </div>
+        </div>
 
+        <!-- SCENT 3 -->
+        <div class="scent" data-switch="piezzo3">
+          <img src="https://www.kimkelleysboutique.com/wp-content/uploads/2019/06/bergamot.jpg" alt="">
+          <span class="questionMark">?</span>
+          <div class="toggleWrapper" data-switch="piezzo3">
+            <div class="customToggle">
+              <span class="toggler"></span>
+            </div>
+            <h3>Bergamot</h3>
+          </div>
+        </div>
 
-    <p>Scent 4 Control</p>  
-
-  <div class="toggleWrapper" data-switch="piezzo4">
-    <div class="customToggle">
-      <span class="toggler"></span>
-    </div>
-    <h3>Scent4</h3>
-  </div>
-
-
-  <p>Find the smell</p>  
-  <input type = "button" onclick = "find_smell()" value = "Start">  
-  
-
+      </div>
+      <p id="playGuessCheck"></p>
+    </section>
+  </main>
+    
   <script src="/static/socket.js"></script>   
 
 </body>

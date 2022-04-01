@@ -19,7 +19,7 @@ WiFiClient client; // Creates a client that can connect to to a specified intern
 String host = "172.20.10.2" ; //iphone de romain
 //String host = "172.21.72.211" ; //wifi dvic
 
-const uint16_t port = 5000 ;
+const uint16_t port = 5001 ; //sio.run port=80 (port du server)
 
 
 uint8_t pin_led = 2; //Pin2 on weimosD1mini

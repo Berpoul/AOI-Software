@@ -1,49 +1,246 @@
-body{
-    font-family: Roboto;
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
+
+html,
+body {
+  height: 100%;
+  margin: 0px;
+}
+
+body {
+  font-family: Roboto;
+  background: rgb(223 225 227);
+  color: rgb(46, 52, 77);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background: linear-gradient(black, transparent); */
+}
+#logo {
+  width: 100px;
+}
+h1 {
+  font-weight: 400;
+  margin: 10px;
+  text-align: center
+}
+hr {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  width: 80%;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+  margin-bottom: 50px;
+}
+
+section {
+  height: 100%;
+  padding: 0px 30px;
+  background: white;
+  margin: 10px;
+  border-radius: 20px;
+}
+
+#controlSection {
+  width: 250px;
+}
+
+#btnShowIP,
+#playGuessBtn {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: transparent;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: Roboto;
+}
+#btnShowIP:hover,
+#playGuessBtn:hover {
+  opacity: 0.5;
+}
+#displayIP {
+  padding: 10px;
+  margin-top: 5px;
+  background: rgb(30, 30, 30);
+  font-size: 0.8rem;
+  color: white;
+  font-family: "Source Code Pro", monospace;
+}
+
+#scentSection {
+  /* flex-grow: 1; */
+}
+#scentRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.scent {
+  overflow: hidden;
+  height: 220px;
+  width: 220px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.scent .questionMark {
+  font-size: 10rem;
+  position: absolute;
+  color: white;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+main.playGuess .scent .questionMark {
+  opacity: 1;
+  font-size: 7rem;
+}
+main.playGuess .scent .toggleWrapper {
+  display: none;
+}
+main.playGuess .scent {
+  cursor: pointer;
+}
+
+.scent img {
+  height: 100%;
+  filter: brightness(0.7);
+}
+
+.scent:hover img {
+  height: 110%;
+  filter: brightness(1);
+  opacity: 0.3;
+}
+
+h2 {
+  font-weight: 300;
+  margin: 20px 0px;
+}
+
+.scent .toggleWrapper h3 {
+  margin: 10px;
+  font-weight: 500;
+  font-size: 1.2rem;
+  opacity: 0;
+}
+
+.scent .toggleWrapper {
+  position: absolute;
+  flex-direction: column;
+}
+
+.scent:hover h3 {
+  opacity: 1;
+}
+
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.toggleWrapper h3 {
+  margin: 0px;
+  margin-left: 20px;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.scent,
+.scent img,
+.toggleWrapper,
+.customToggle,
+.toggler {
+  transition: all 0.2s ease;
+}
+
+.customToggle {
+  position: relative;
+  width: 50px;
+  height: 25px;
+  background: rgba(39, 46, 56, 1);
+  background: rgb(236, 236, 236);
+  border: 1px solid rgba(39, 46, 56, 1);
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.customToggle:hover {
+  opacity: 0.75;
+}
+
+.toggler {
+  height: 19px;
+  width: 19px;
+  border-radius: 20px;
+  background: rgb(106, 108, 110);
+  margin-left: -50%;
+}
+
+.customToggle.toggled {
+  background: rgb(213, 231, 255);
+}
+
+.customToggle.toggled .toggler {
+  margin-left: 50%;
+  background: rgb(24, 88, 167);
+}
+
+#playGuessCheck {
+  text-align: center;
+  font-size: 3rem;
+  transition: all 0.2s ease;
+}
+
+@media screen and (max-width: 991px) {
+  .scent {
+    height: 120px;
+    width: 120px;
   }
-  
-  .toggleWrapper{
-    display: flex;
-    align-items: center;
-    margin: 20px;
-    border: 1px solid red;
+  .scent:hover img{
+    height: 100% !important;
+    filter: brightness(0.7) !important;
+    opacity: 1;
   }
-  
-  .toggleWrapper h3{
-    margin: 0px 20px;
-    font-size: 1rem;
-    font-weight: 300;
+  .scent h3{
+    opacity: 1 !important;
+    color: white;
+    font-size: .9rem;
   }
-  
-  .customToggle, .toggler{
-    transition: all 0.2s ease;
+  #playGuessCheck{
+    font-size: 1.5rem;
   }
-  
-  .customToggle{
-    position: relative;
-    width: 50px;
-    height: 25px;
-    background: rgba(39, 46, 56, 1);
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;  
-    align-items: center;
-    cursor: pointer;
+  main.playGuess .scent .questionMark {
+    font-size: 5rem;
   }
-  
-  .customToggle:hover{
-    background: rgba(39, 46, 56, .8);
+}
+
+@media screen and (orientation: portrait) {
+  main{
+    flex-direction: column;
   }
-  
-  .toggler{
-    height: 19px;
-    width: 19px;
-    border-radius: 20px;
-    background: rgb(176, 179, 182);
-    margin-left: -50%;
+  #controlSection, #scentSection{
+    width: calc(100% - 40px);
+    padding: 10px;
   }
-  
-  .customToggle.toggled .toggler{
-    margin-left: 50%;
-    background: rgb(68, 152, 255);
-  }
+}
