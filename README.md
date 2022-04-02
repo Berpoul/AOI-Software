@@ -8,6 +8,7 @@ Connect to the front client to control the AOI : http://127.0.0.1:5000/
 If you want to send command directly  http://172.20.10.8:5200/release?output=2&state=1
 usi the ip adresse of the aoi given by server
 
+## Description 
 
 ScentIO aims to make seameless interraction between users and
 olfactive interfaces.
@@ -26,6 +27,10 @@ ScentIO enables users to interact easily with the OI through aweb browser.
 ScentIO includes HTTP server, flask server, websocket protocol and a
 web-GUI.
 
+## Diagram 
+
+![Diagram](/path/to/image.png "Text to show on mouseover").
+
 The architecture diagram below shows the different parts of the ScentIO.
 The user can interact with the software directly on the GUI (web browser).
 The Web interface sends data to the Web server API using websocket
@@ -34,7 +39,9 @@ mounted on the OI using HTTP request The microcontroller
 sends the command to the electronic circuit through Arduino libraries
 and digitalWrite functions.
 
-Quickstart : 
+## Quickstart 
 
 Check out the tutorial video :
 https://youtu.be/4dTqJkcMnHk
+
+## Requirements
