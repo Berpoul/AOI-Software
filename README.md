@@ -29,7 +29,7 @@ web-GUI.
 
 ## Diagram 
 
-![Diagram](/path/to/image.png "Text to show on mouseover").
+![Diagram](/diagram1024_1.png "Architecture Diagram").
 
 The architecture diagram below shows the different parts of the ScentIO.
 The user can interact with the software directly on the GUI (web browser).
